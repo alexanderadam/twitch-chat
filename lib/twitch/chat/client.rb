@@ -117,24 +117,6 @@ module Twitch
         @connection.close_connection
       end
 
-    private
-
-      def handle_message_queue
-        EM.add_timer(message_delay) do
-          if message = @messages_queue.pop
-            send_data "PRIVMSG ##{@channel.name} :#{message}"
-            @logger.debug("Sent message: PRIVMSG ##{@channel.name} :#{message}")
-          end
-
-          handle_message_queue
-        end
-      end
-
-      def unbind(arg = nil)
-        part if @channel
-        trigger(:disconnect)
-      end
-
       def receive_data(data)
         data.split(/\r?\n/).each do |message|
           @logger.debug(message)
@@ -164,6 +146,24 @@ module Twitch
             end
           end
         end
+      end
+
+    private
+
+      def handle_message_queue
+        EM.add_timer(message_delay) do
+          if message = @messages_queue.pop
+            send_data "PRIVMSG ##{@channel.name} :#{message}"
+            @logger.debug("Sent message: PRIVMSG ##{@channel.name} :#{message}")
+          end
+
+          handle_message_queue
+        end
+      end
+
+      def unbind(arg = nil)
+        part if @channel
+        trigger(:disconnect)
       end
 
       def send_data(message)
