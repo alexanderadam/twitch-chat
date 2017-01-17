@@ -148,6 +148,11 @@ module Twitch
         end
       end
 
+      def unbind(arg = nil)
+        part if @channel
+        trigger(:disconnect)
+      end
+
     private
 
       def handle_message_queue
@@ -159,11 +164,6 @@ module Twitch
 
           handle_message_queue
         end
-      end
-
-      def unbind(arg = nil)
-        part if @channel
-        trigger(:disconnect)
       end
 
       def send_data(message)
