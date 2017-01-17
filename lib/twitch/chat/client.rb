@@ -105,7 +105,11 @@ module Twitch
       end
 
       def max_messages_count
-        @channel.moderators.include?(@nickname) ? MODERATOR_MESSAGES_COUNT : USER_MESSAGES_COUNT
+        if @channel && @channel.moderators.include?(@nickname)
+          MODERATOR_MESSAGES_COUNT
+        else
+          USER_MESSAGES_COUNT
+        end
       end
 
       def message_delay
