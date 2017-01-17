@@ -112,6 +112,11 @@ module Twitch
         TWITCH_PERIOD / max_messages_count
       end
 
+      def disconnect
+        trigger(:disconnect)
+        @connection.close_connection
+      end
+
     private
 
       def handle_message_queue
