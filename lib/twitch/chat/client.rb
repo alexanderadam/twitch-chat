@@ -11,7 +11,7 @@ module Twitch
       def initialize(options = {}, &blk)
         options.symbolize_keys!
         options = {
-          host: 'irc.twitch.tv',
+          host: 'irc.chat.twitch.tv',
           port: '6667',
           output: STDOUT
         }.merge!(options)
@@ -146,7 +146,7 @@ module Twitch
               when :ping
                 trigger(:ping)
               when :message
-                trigger(:message, message.user, message.message) if message.target == @channel.name
+                trigger(:message, message)
               when :mode
                 trigger(:mode, *message.params.last(2))
 
