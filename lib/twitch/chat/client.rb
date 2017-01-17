@@ -83,10 +83,13 @@ module Twitch
         send_data "JOIN ##{@channel.name}"
       end
 
-      def part
-        send_data "PART ##{@channel.name}"
-        @channel = nil
-        @messages_queue = []
+      def part(channel_name = nil)
+        channel_name = channel_name || @channel.name
+        send_data "PART ##{channel_name}"
+        if channel_name.nil?
+          @channel = nil
+          @messages_queue = []
+        end
       end
 
       def send_message(message)
