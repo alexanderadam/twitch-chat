@@ -14,21 +14,18 @@ describe Twitch::Chat::Message do
       context :slow_mode do
         let(:message) { Twitch::Chat::Message.new(":jtv!jtv@jtv.tmi.twitch.tv PRIVMSG #enotpoloskun :This room is now in slow mode. You may send messages every 123 seconds") }
 
-        it { message.type.should eq :slow_mode }
         it { message.user.should eq 'jtv' }
       end
 
       context :r9k_mode do
         let(:message) { Twitch::Chat::Message.new(":jtv!jtv@jtv.tmi.twitch.tv PRIVMSG #enotpoloskun :This room is now in r9k mode.") }
 
-        it { message.type.should eq :r9k_mode }
         it { message.user.should eq 'jtv' }
       end
 
       context :r9k_mode do
         let(:message) { Twitch::Chat::Message.new(":jtv!jtv@jtv.tmi.twitch.tv PRIVMSG #enotpoloskun :This room is now in subscribers-only mode.") }
 
-        it { message.type.should eq :subscribers_mode }
         it { message.user.should eq 'jtv' }
       end
 
